@@ -17,7 +17,8 @@ class Home extends React.Component {
             <div>
             <button type="submit" className="btn btn-primary" 
             onClick ={() => {sessionStorage.removeItem("username"); this.props.history.push('/')}}>Logout</button>
-            <h1>Hi to hhome</h1>
+            <h1>{this.props.location.state.username}</h1>
+            <h1>{this.props.location.state.user_id}</h1>
             </div>
         )
     }

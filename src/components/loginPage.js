@@ -26,20 +26,21 @@ class LoginPage extends React.Component {
     submit(event){
         event.preventDefault();
       if( this.validator.allValid() ){
+          var self = this;
           axios.post('http://104.211.231.95:8080/authenticate', {
     username: this.state.username,
     password: this.state.password
   })
-  .then(function (response) {
+  .then( (response)=> {
     console.log(response);
-    let data = response.data.result;
-
+    //let data = response.data.result;
+   //if(data.status !)
     sessionStorage.setItem("username", this.state.username);
-    sessionStorage.setItem("user_id", data.user_id);
+    //sessionStorage.setItem("user_id", data.user_id);
 
-    //this.props.history.push('/home')
+this.props.history.push({pathname: '/home',state: { username: this.state.username,user_id:"rrr" }})
   })
-  .catch(function (error) {
+  .catch((error)=> {
     console.log(error);
   });
           
