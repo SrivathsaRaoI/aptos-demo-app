@@ -32,8 +32,8 @@ class LoginPage extends React.Component {
         if( this.validator.allValid() ){
             var self = this;
             //TODO
-                sessionStorage.setItem("username", this.state.username);
-                this.props.history.push({pathname: '/home',state: { username: this.state.username,user_id:"0" }});
+                //sessionStorage.setItem("username", this.state.username);
+                //this.props.history.push({pathname: '/home',state: { username: this.state.username,user_id:"0" }});
             //TODO
             axios.post(baseURL+"/authenticate", 
                         { username: this.state.username,
