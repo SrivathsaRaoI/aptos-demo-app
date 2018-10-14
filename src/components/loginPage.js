@@ -1,15 +1,16 @@
 import React from 'react';
-import "./loginPage.css";
-import SimpleReactValidator from 'simple-react-validator'
-import {
-  withRouter
-} from 'react-router-dom'
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import SimpleReactValidator from 'simple-react-validator';
 import axios from 'axios';
+import {baseURL} from '../Config';
+
+import './loginPage.css';
 
 class LoginPage extends React.Component {
     constructor(){
         super();
-        this.state ={
+        this.state = {
             username:"",
             password:""
         }
@@ -17,42 +18,50 @@ class LoginPage extends React.Component {
         this.submit = this.submit.bind(this);
         this.validator = new SimpleReactValidator();
     }
-    changeData(type,event){
-        if(type == "password")
-        this.setState({password:event.target.value})
-        else
-        this.setState({username:event.target.value})
-    }
-    submit(event){
-        event.preventDefault();
-      if( this.validator.allValid() ){
-          var self = this;
-          axios.post('http://104.211.231.95:8080/authenticate', {
-    username: this.state.username,
-    password: this.state.password
-  })
-  .then( (response)=> {
-    console.log(response);
-    //let data = response.data.result;
-   //if(data.status !)
-    sessionStorage.setItem("username", this.state.username);
-    //sessionStorage.setItem("user_id", data.user_id);
 
-this.props.history.push({pathname: '/home',state: { username: this.state.username,user_id:"rrr" }})
-  })
-  .catch((error)=> {
-    console.log(error);
-  });
-          
-  } else {
-    this.validator.showMessages();
-    // rerender to show messages for the first time
-    this.forceUpdate();
-  }
+    changeData(type,event){
+        if(type === "password"){
+            this.setState({password:event.target.value});
+        } else {
+            this.setState({username:event.target.value})
+        }
     }
+
+    submit(event) {
+        event.preventDefault();
+        if( this.validator.allValid() ){
+            var self = this;
+            //TODO
+                sessionStorage.setItem("username", this.state.username);
+                this.props.history.push({pathname: '/home',state: { username: this.state.username,user_id:"0" }});
+            //TODO
+            axios.post(baseURL+"/authenticate", 
+                        { username: this.state.username,
+                          password: this.state.password
+                        }
+                       ).then( (response)=> {
+                                console.log(response);
+                                //let data = response.data.result;
+                                //if(data.status !)
+                                sessionStorage.setItem("username", this.state.username);
+                                //sessionStorage.setItem("user_id", data.user_id);
+                                this.props.history.push({pathname: '/home',state: { username: this.state.username,user_id:"0" }})
+                        }).catch((error)=> {
+                            console.log(error);
+                        });
+                        
+          
+        } else {
+            this.validator.showMessages();
+            // rerender to show messages for the first time
+            this.forceUpdate();
+        }
+    }
+
     render(){
         return(
-        <div className="container login-form">
+        <Card className="login-form">
+         <CardContent>
           <form className="form-style">
                 <div className="form-group">
                     <label >username</label>
@@ -69,8 +78,8 @@ this.props.history.push({pathname: '/home',state: { username: this.state.usernam
                 </div>
                 <button type="submit" className="btn btn-primary" onClick ={this.submit}>Submit</button>
           </form>
-        </div>
-
+          </CardContent>
+        </Card>
         )
     }
 }

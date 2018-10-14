@@ -1,8 +1,5 @@
 import React from 'react';
-import "./loginPage.css";
-import {
-  withRouter
-} from 'react-router-dom'
+import Sidebar from './SideBar';
 
 class Home extends React.Component {
     componentWillMount(){
@@ -12,14 +9,12 @@ class Home extends React.Component {
         }
 
     }
+
     render(){
         return(
-            <div>
-            <button type="submit" className="btn btn-primary" 
-            onClick ={() => {sessionStorage.removeItem("username"); this.props.history.push('/')}}>Logout</button>
-            <h1>{this.props.location.state.username}</h1>
-            <h1>{this.props.location.state.user_id}</h1>
-            </div>
+            <Sidebar toview= {this.props.location.state.user_id}
+                     toLogout={() => {sessionStorage.removeItem("username"); this.props.history.push('/')}}
+             />
         )
     }
 }
