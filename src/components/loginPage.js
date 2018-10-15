@@ -40,14 +40,31 @@ class LoginPage extends React.Component {
                           password: this.state.password
                         }
                        ).then( (response)=> {
-                                console.log(response);
+                                console.log(response.data);
+                                var responseData = response.data;
+                                if(responseData.status ==1){
+                                    if(responseData.error){
+                                    alert("Wrong user name or password");
+                                   }
+                                }
+                                if(responseData.status == 0){
+                                    if(responseData.result.status = 1){
+                                        sessionStorage.setItem("username", this.state.username);
+                                        sessionStorage.setItem("user_id", responseData.result.user_id);
+                                        this.props.history.push({pathname: '/home',state: { username: this.state.username,user_id:responseData.result.user_id }})
+                                    }
+                                    else{
+                                        alert("user don't have access")
+                                    }
+                                    
+                                }
+                                
                                 //let data = response.data.result;
                                 //if(data.status !)
-                                sessionStorage.setItem("username", this.state.username);
-                                //sessionStorage.setItem("user_id", data.user_id);
-                                this.props.history.push({pathname: '/home',state: { username: this.state.username,user_id:"0" }})
+                               // 
                         }).catch((error)=> {
                             console.log(error);
+                            
                         });
                         
           

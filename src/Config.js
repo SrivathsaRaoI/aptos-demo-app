@@ -1,1 +1,1 @@
-export const baseURL = "http://104.211.231.95:8080";
+export const baseURL = "http://nodeapp.southindia.cloudapp.azure.com";
