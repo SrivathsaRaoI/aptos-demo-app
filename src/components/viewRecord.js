@@ -6,7 +6,7 @@ import axios from 'axios';
 import {baseURL} from '../Config';
 
 const columns = [{
-  dataField: 'orderid',
+  dataField: 'order_id',
   text: 'Order ID',
   sort: true,
   
@@ -23,7 +23,7 @@ const columns = [{
   text: 'Status',
   sort: true
 }, {
-  dataField: 'expectedDOD',
+  dataField: 'expected_dod',
   text: 'Expected DOD',
   sort: true,
   formatter: (cell) => {
@@ -38,21 +38,7 @@ const columns = [{
   }
 }];
 
-const data=[{"orderid": 1,
-              "itemname": "Nokia 6.1",
-              "quantity": 1,
-              "status": "Shipped",
-              "expectedDOD": "10/18/2018"},
-            {"orderid": 2,
-              "itemname": "Skull Candy Ear Phone",
-              "quantity": 1,
-              "status": "Shipped",
-              "expectedDOD": "10/18/2018"},
-            {"orderid": 3,
-              "itemname": "RAZOR Abyss",
-              "quantity": 1,
-              "status": "Shipped",
-              "expectedDOD": "10/18/2018"}];
+const data=[];
 
 const { ExportCSVButton } = CSVExport;
 
@@ -80,7 +66,7 @@ class View extends Component {
                         { user_id: this.props.userId }
                        ).then( (response)=> {
                                 console.log(response);
-                                this.setState({data: response.data,
+                                this.setState({data: response.data.result,
                                                isLoding:false});
                         }).catch((error)=> {
                             console.log(error);

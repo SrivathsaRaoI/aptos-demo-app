@@ -11,8 +11,9 @@ class Home extends React.Component {
     }
 
     render(){
+        let user_id = this.props.location && this.props.location.state && this.props.location.state && 0;
         return(
-            <Sidebar toview= {this.props.location.state.user_id}
+            <Sidebar toview= {user_id}
                      toLogout={() => {sessionStorage.removeItem("username"); this.props.history.push('/')}}
              />
         )
