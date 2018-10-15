@@ -81,8 +81,11 @@ class LoginPage extends React.Component {
 
     render(){
         return(
+            <div>
+                
         <Card className="login-form">
          <CardContent>
+             <img className ="loginLogo" src="aptos.jpg" alt="Smiley face" height="100" width="100"/>
           <form className="form-style">
                 <div className="form-group">
                     <label >username</label>
@@ -101,6 +104,7 @@ class LoginPage extends React.Component {
           </form>
           </CardContent>
         </Card>
+        </div>
         )
     }
 }
