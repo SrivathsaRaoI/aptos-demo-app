@@ -4,6 +4,9 @@ import CardContent from '@material-ui/core/CardContent';
 import SimpleReactValidator from 'simple-react-validator';
 import axios from 'axios';
 import {baseURL} from '../Config';
+import { Button, notification } from 'antd';
+import 'antd/dist/antd.css';
+
 
 import './loginPage.css';
 
@@ -44,7 +47,10 @@ class LoginPage extends React.Component {
                                 var responseData = response.data;
                                 if(responseData.status ==1){
                                     if(responseData.error){
-                                    alert("Wrong user name or password");
+                                    notification.open({
+                                        message: 'alert',
+                                        description: 'Wrong user name or password',
+                                    });
                                    }
                                 }
                                 if(responseData.status == 0){
@@ -54,14 +60,13 @@ class LoginPage extends React.Component {
                                         this.props.history.push({pathname: '/home',state: { username: this.state.username,user_id:responseData.result.user_id }})
                                     }
                                     else{
-                                        alert("user don't have access")
+                                        notification.open({
+                                        message: '',
+                                        description: "user don't have access",
+                                    });
                                     }
                                     
                                 }
-                                
-                                //let data = response.data.result;
-                                //if(data.status !)
-                               // 
                         }).catch((error)=> {
                             console.log(error);
                             
@@ -70,7 +75,6 @@ class LoginPage extends React.Component {
           
         } else {
             this.validator.showMessages();
-            // rerender to show messages for the first time
             this.forceUpdate();
         }
     }
