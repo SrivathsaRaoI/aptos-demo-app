@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from './SideBar';
+import Layout from '../Layout/Dashboard/SliderDashBoard';
 
 class Home extends React.Component {
     componentWillMount(){
@@ -12,11 +12,7 @@ class Home extends React.Component {
 
     render(){
         let user_id = this.props.location && this.props.location.state && this.props.location.state && 0;
-        return(
-            <Sidebar toview= {user_id}
-                     toLogout={() => {sessionStorage.removeItem("username"); this.props.history.push('/')}}
-             />
-        )
+        return(<Layout toview= {user_id} />);
     }
 }
 

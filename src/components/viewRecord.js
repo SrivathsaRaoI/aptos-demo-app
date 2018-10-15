@@ -1,65 +1,62 @@
 import React, {Component} from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
-import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit';
-import cellEditFactory, {Type} from 'react-bootstrap-table2-editor';
+import { Table } from 'antd';
+
 import axios from 'axios';
 import {baseURL} from '../Config';
 
+const CaptionElement = () => <h3 style={{ borderRadius: '0.25em', textAlign: 'center', color: 'blue', border: '1px solid blue', padding: '0.5em' }}>
+                                Order Summary
+                             </h3>;
+
 const columns = [{
-  dataField: 'order_id',
-  text: 'Order ID',
-  sort: true,
-  
+  title: 'Order Id',
+  dataIndex: 'order_id',
+  key: 'order_id',
+  sorter: (a, b) => a.order_id - b.order_id
 }, {
-  dataField: 'itemname',
-  text: 'Item Name',
-  sort: true
+  title: 'Item Name',
+  dataIndex: 'itemname',
+  key: 'itemname',
+  sorter: (a, b) => a.itemname.length - b.itemname.length
 }, {
-  dataField: 'quantity',
-  text: 'Quantity',
-  sort: true
+  title: 'Quantity',
+  dataIndex: 'quantity',
+  key: 'quantity',
+  sorter: (a, b) => a.quantity - b.quantity
 }, {
-  dataField: 'status',
-  text: 'Status',
-  sort: true
+  title: 'Status',
+  dataIndex: 'status',
+  key: 'status',
+  sorter: (a, b) => a.status.length - b.status.length
 }, {
-  dataField: 'expected_dod',
-  text: 'Expected DOD',
-  sort: true,
-  formatter: (cell) => {
-    let dateObj = cell;
-    if (typeof cell !== 'object') {
-      dateObj = new Date(cell);
-    }
-    return `${('0' + dateObj.getDate()).slice(-2)}/${('0' + (dateObj.getMonth() + 1)).slice(-2)}/${dateObj.getFullYear()}`;
-  },
-  editor: {
-    type: Type.DATE
-  }
+  title: 'Expected DOD',
+  dataIndex: 'expected_dod',
+  key: 'expected_dod',
+  sorter: (a, b) => a.expected_dod.length - b.expected_dod.length
 }];
 
-const data=[];
-
-const { ExportCSVButton } = CSVExport;
-
-const CaptionElement = () => 
-        <h3 style={{ borderRadius: '0.25em', textAlign: 'center', color: 'blue', border: '1px solid blue', padding: '0.5em' }}>
-            Order Summary
-        </h3>;
-
-const selectRow = {
-  mode: 'checkbox',
-  clickToSelect: true
-};
 
 class View extends Component {
      constructor(){
         super();
         this.state = {
-            data:data,
+            data:[{"order_id": 1,
+              "itemname": "Nokia 6.1",
+              "quantity": 1,
+              "status": "Shipped",
+              "expected_dod": "10/18/2018"},
+            {"order_id": 2,
+              "itemname": "Skull Candy Ear Phone",
+              "quantity": 1,
+              "status": "Shipped",
+              "expected_dod": "10/18/2018"},
+            {"order_id": 3,
+              "itemname": "RAZOR Abyss",
+              "quantity": 1,
+              "status": "Shipped",
+              "expected_dod": "10/18/2018"}],
             isLoding:true
         }
-       
     }
     componentWillMount(){
         axios.post(baseURL+"/find", 
@@ -73,37 +70,14 @@ class View extends Component {
                             this.setState({isLoding:false});
                         });
     }
+
     render() {
-        return (
-        <React.Fragment>
+        return (<React.Fragment>
             <CaptionElement />
-            <ToolkitProvider keyField="orderid"
-                             data={ this.state.data }
-                             columns={ columns }
-                             exportCSV
-            >
-                {
-                    props => (
-                                <div>
-                                    <ExportCSVButton { ...props.csvProps }>Export CSV!!</ExportCSVButton>
-                                    <hr />
-                                    <BootstrapTable { ...props.baseProps }
-                                                    striped
-                                                    hover
-                                                    condensed
-                                                    bordered={ false }
-                                                    cellEdit={ cellEditFactory({ mode: 'click',
-                                                                                 blurToSave: true,
-                                                                                 afterSaveCell: (oldValue, newValue, row, column) => { alert('After Saving Cell!!'); }
-                                                                               })
-                                                    }
-                                    />
-                                </div>
-                            )
-                }
-            </ToolkitProvider>
-        </React.Fragment>);
+            <Table dataSource={this.state.data} columns={columns} />
+            </React.Fragment>);
     }
 }
+
 
 export default View;
