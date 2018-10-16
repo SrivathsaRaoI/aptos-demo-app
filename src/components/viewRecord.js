@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Table } from 'antd';
-import Spinner from '../Spinner/Spinner';
 import axios from 'axios';
 import {baseURL} from '../Config';
 
@@ -17,7 +16,7 @@ const columns = [{
   title: 'Item Name',
   dataIndex: 'itemname',
   key: 'itemname',
-  sorter: (a, b) => a.itemname.length - b.itemname.length
+  sorter: (a, b) => a.itemname.localeCompare(b.itemname) 
 }, {
   title: 'Quantity',
   dataIndex: 'quantity',
@@ -27,12 +26,19 @@ const columns = [{
   title: 'Status',
   dataIndex: 'status',
   key: 'status',
-  sorter: (a, b) => a.status.length - b.status.length
+  sorter: (a, b) => a.status - b.status
 }, {
   title: 'Expected DOD',
   dataIndex: 'expected_dod',
   key: 'expected_dod',
-  sorter: (a, b) => a.expected_dod.length - b.expected_dod.length
+  render: (expected_dod) => {
+    let dateObj = expected_dod;
+    if (typeof expected_dod !== 'object') {
+      dateObj = new Date(expected_dod);
+    }
+    return `${('0' + dateObj.getDate()).slice(-2)}/${('0' + (dateObj.getMonth() + 1)).slice(-2)}/${dateObj.getFullYear()}`;
+  },
+  sorter: (a, b) => new Date(a).getTime() - new Date(b).getTime()
 }];
 
 
@@ -40,21 +46,7 @@ class View extends Component {
      constructor(){
         super();
         this.state = {
-            data:[{"order_id": 1,
-              "itemname": "Nokia 6.1",
-              "quantity": 1,
-              "status": "Shipped",
-              "expected_dod": "10/18/2018"},
-            {"order_id": 2,
-              "itemname": "Skull Candy Ear Phone",
-              "quantity": 1,
-              "status": "Shipped",
-              "expected_dod": "10/18/2018"},
-            {"order_id": 3,
-              "itemname": "RAZOR Abyss",
-              "quantity": 1,
-              "status": "Shipped",
-              "expected_dod": "10/18/2018"}],
+            data:[],
             isLoding:true
         }
     }
@@ -72,15 +64,11 @@ class View extends Component {
     }
 
     render() {
-      if(this.state.isLoding){
-        return(<Spinner/>);
-      } else {
          return (<React.Fragment>
             <CaptionElement />
-            <Table dataSource={this.state.data} columns={columns} />
+            <Table dataSource={this.state.data} loading={this.state.isLoding}columns={columns} />
             </React.Fragment>);
       }
-    }
 }
 
 
