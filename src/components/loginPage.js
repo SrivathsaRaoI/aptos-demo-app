@@ -15,7 +15,8 @@ class LoginPage extends React.Component {
         super();
         this.state = {
             username:"",
-            password:""
+            password:"",
+            loading:false
         }
         this.changeData = this.changeData.bind(this);
         this.submit = this.submit.bind(this);
@@ -34,6 +35,7 @@ class LoginPage extends React.Component {
         event.preventDefault();
         if( this.validator.allValid() ){
             var self = this;
+            this.setState({loading:true})
             //TODO
                 //sessionStorage.setItem("username", this.state.username);
                 //this.props.history.push({pathname: '/home',state: { username: this.state.username,user_id:"0" }});
@@ -43,6 +45,7 @@ class LoginPage extends React.Component {
                           password: this.state.password
                         }
                        ).then( (response)=> {
+                                this.setState({loading:false})
                                 console.log(response.data);
                                 var responseData = response.data;
                                 if(responseData.status ==1){
@@ -69,6 +72,11 @@ class LoginPage extends React.Component {
                                 }
                         }).catch((error)=> {
                             console.log(error);
+                            this.setState({loading:false})
+                            notification.open({
+                                        message: '',
+                                        description: "Unable to connect !!!",
+                                    });
                             
                         });
                         
@@ -100,7 +108,10 @@ class LoginPage extends React.Component {
                     {this.validator.message('password', this.state.password, 'required', 'text-danger')}
 
                 </div>
-                <button type="submit" className="btn btn-primary" onClick ={this.submit}>Submit</button>
+                <Button type="primary" block loading={this.state.loading} onClick={this.submit}>
+          Submit
+        </Button>
+                
           </form>
           </CardContent>
         </Card>
