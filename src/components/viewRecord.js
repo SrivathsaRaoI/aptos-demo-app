@@ -36,9 +36,9 @@ const columns = [{
     if (typeof expected_dod !== 'object') {
       dateObj = new Date(expected_dod);
     }
-    return `${('0' + dateObj.getDate()).slice(-2)}/${('0' + (dateObj.getMonth() + 1)).slice(-2)}/${dateObj.getFullYear()}`;
+   return `${('0' + dateObj.getDate()).slice(-2)}/${('0' + (dateObj.getMonth() + 1)).slice(-2)}/${dateObj.getFullYear()}`;
   },
-  sorter: (a, b) => new Date(a).getTime() - new Date(b).getTime()
+  sorter: (a, b) => parseInt(new Date(a.expected_dod).getTime()) - parseInt(new Date(b.expected_dod).getTime())
 }];
 
 
