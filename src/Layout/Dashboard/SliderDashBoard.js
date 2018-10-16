@@ -23,7 +23,8 @@ class DashBoard extends Component{
       return(
            <Layout style={{ minHeight: '100vh' }}>
                 <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
-                    <div className="logo" />
+                    <div className="logo" style={{height: '60px'}}>
+                    </div>
                      <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                         <Menu.Item key="1">
                             <Icon type="pie-chart" />
@@ -36,7 +37,14 @@ class DashBoard extends Component{
                      </Menu>
                 </Sider>
                 <Layout>
-                    <Header style={{ background: '#212529', padding: 0 }} />
+                    <Header className="header">
+                        <div className="logo" />
+                            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} style={{ padding: '0 0px',
+                                                                                                      lineHeight: '64px' }}>
+                                <Menu.Item key="1">Orders</Menu.Item>
+                                
+                            </Menu>
+                    </Header>
                     <Content style={{ margin: '0 16px' }}>
                         <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                             <View userId= {this.props.toview} />
