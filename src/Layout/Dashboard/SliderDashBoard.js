@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
 import View from '../../components/viewRecord';
 import './SliderDashBoard.css';
 
-
-const { Header, Content, Footer, Sider } = Layout;
-const SubMenu = Menu.SubMenu;
-
+const { Header, Footer, Sider } = Layout;
 
 class DashBoard extends Component{
 
@@ -41,17 +38,12 @@ class DashBoard extends Component{
                         <div className="logo" />
                             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} style={{ padding: '0 0px',
                                                                                                       lineHeight: '64px' }}>
-                                <Menu.Item key="1">Orders</Menu.Item>
-                                
+                                <Menu.Item key="1">Order</Menu.Item>
                             </Menu>
                     </Header>
-                    <Content style={{ margin: '0 16px' }}>
-                        <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                            <View userId= {this.props.toview} />
-                        </div>
-                    </Content>
+                    <View userId= {this.props.toview} />
                     <Footer style={{ textAlign: 'center' }}>
-                        Ant Design ©2018 Zensar
+                        Ant Design ©2018 Aptos
                     </Footer>
                 </Layout>
            </Layout>

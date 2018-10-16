@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import { Table } from 'antd';
 import axios from 'axios';
 import {baseURL} from '../Config';
+import {Layout, Breadcrumb} from 'antd';
+
+const { Content } = Layout;
 
 const CaptionElement = () => <h3 style={{ borderRadius: '0.25em', textAlign: 'center', color: 'blue', border: '1px solid blue', padding: '0.5em' }}>
                                 Order Summary
@@ -64,10 +67,17 @@ class View extends Component {
     }
 
     render() {
-         return (<React.Fragment>
-            <CaptionElement />
-            <Table dataSource={this.state.data} loading={this.state.isLoding}columns={columns} />
-            </React.Fragment>);
+         return (
+                    <Content style={{ margin: '0 16px' }}>
+                        <Breadcrumb style={{ margin: '16px 0' }}>
+                        <Breadcrumb.Item>Home</Breadcrumb.Item>
+                        <Breadcrumb.Item>Order Summary</Breadcrumb.Item>
+                    </Breadcrumb>
+                    <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                       <Table dataSource={this.state.data} loading={this.state.isLoding}columns={columns} />
+                    </div>
+            </Content>
+            );
       }
 }
 
