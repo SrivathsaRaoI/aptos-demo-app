@@ -16,6 +16,7 @@ class DashBoard extends Component{
     this.setState({ collapsed });
   }
 
+  //to render
   render(){
       return(
            <Layout style={{ minHeight: '100vh' }}>

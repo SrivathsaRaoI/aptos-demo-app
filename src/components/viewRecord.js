@@ -66,6 +66,7 @@ class View extends Component {
                         });
     }
 
+    //to render
     render() {
          return (
                     <Content style={{ margin: '0 16px' }}>
