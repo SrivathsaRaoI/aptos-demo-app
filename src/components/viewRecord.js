@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Table } from 'antd';
-
+import Spinner from '../Spinner/Spinner';
 import axios from 'axios';
 import {baseURL} from '../Config';
 
@@ -72,10 +72,14 @@ class View extends Component {
     }
 
     render() {
-        return (<React.Fragment>
+      if(this.state.isLoding){
+        return(<Spinner/>);
+      } else {
+         return (<React.Fragment>
             <CaptionElement />
             <Table dataSource={this.state.data} columns={columns} />
             </React.Fragment>);
+      }
     }
 }
 

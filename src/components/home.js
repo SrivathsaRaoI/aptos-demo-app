@@ -12,7 +12,9 @@ class Home extends React.Component {
 
     render(){
         let user_id = this.props.location && this.props.location.state && this.props.location.state && 0;
-        return(<Layout toview= {user_id} />);
+        return(<Layout toview= {user_id} 
+                       toLogout={() => {sessionStorage.removeItem("username"); this.props.history.push('/')}}
+                />);
     }
 }
 

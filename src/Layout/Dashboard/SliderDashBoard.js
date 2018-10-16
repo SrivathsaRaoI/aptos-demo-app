@@ -29,7 +29,7 @@ class DashBoard extends Component{
                             <Icon type="pie-chart" />
                             <span>Summary</span>
                         </Menu.Item>
-                        <Menu.Item key="2">
+                        <Menu.Item key="2" onClick={this.props.toLogout}>
                             <Icon type="desktop" />
                             <span>Logout</span>
                         </Menu.Item>
